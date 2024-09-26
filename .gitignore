@@ -1,0 +1,6 @@
+./miner/bin
+./miner/obj
+*.sln
+
+#mac
+.DS_Store
