@@ -1,4 +1,3 @@
 .vscode
-*.sln
 miner/bin/*
 miner/obj/*
