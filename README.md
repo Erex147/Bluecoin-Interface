@@ -1,2 +1,2 @@
-# BluecoinInterface
-interface to interact with BlueCoin API or smth
+# Bluecoin Interface
+soemting that icant use
