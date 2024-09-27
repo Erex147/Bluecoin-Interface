@@ -321,7 +321,7 @@ class Program
         }
     }
 
-    static async Task<HttpResponseMessage> GetMessageAsync(string url)
+    static async Task<HttpResponseMessage> GetMessageAsync(string url) // send a http(s) get request to the endpoint
     {
         HttpResponseMessage response = await client.GetAsync(url);
 
@@ -336,7 +336,7 @@ class Program
         return response;
     }
 
-    static async Task<HttpResponseMessage> PostMessageAsync(string url, JsonContent? jsoncontent)
+    static async Task<HttpResponseMessage> PostMessageAsync(string url, JsonContent? jsoncontent) // send a http(s) post request to the endpoint
     {
         HttpResponseMessage response = await client.PostAsync(url, jsoncontent);
     
@@ -351,7 +351,7 @@ class Program
         return response;
     }
 
-    static async Task<dynamic> ProcessHttpResponse(HttpResponseMessage responseMessage)
+    static async Task<dynamic> ProcessHttpResponse(HttpResponseMessage responseMessage) //process http(s) reponses from post/get requests
     {
         string content = await responseMessage.Content.ReadAsStringAsync();
         dynamic data = JsonConvert.DeserializeObject(content);
@@ -359,7 +359,7 @@ class Program
         return data;
     }
 
-    static async Task<List<dynamic>> ProcessHttpResponseList(HttpResponseMessage responseMessage)
+    static async Task<List<dynamic>> ProcessHttpResponseList(HttpResponseMessage responseMessage) //process http(s) reponses from post/get requests but as a list
     {
         string content = await responseMessage.Content.ReadAsStringAsync();
         List<dynamic> data = JsonConvert.DeserializeObject<List<dynamic>>(content);
@@ -367,7 +367,7 @@ class Program
         return data;
     }
 
-    static string PromptUser(string prompt)
+    static string PromptUser(string prompt) // accept user input
     {
         Console.WriteLine(prompt + "");
         string response = Console.ReadLine() + "";
