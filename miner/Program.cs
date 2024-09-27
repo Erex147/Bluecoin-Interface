@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿// Copyright (C) 2024  Erex147
+using System.Net.Http.Json;
 using Newtonsoft.Json;
 
 class Program
@@ -22,6 +23,7 @@ class Program
             }
         }
 
+        Console.WriteLine("bluc-interface  Copyright (C) 2024  Erex147");
         while (true)
         {
             Console.WriteLine("\nWhat do you want to do?\n" +
@@ -40,6 +42,7 @@ class Program
 
             if (user_input == "1")
             {
+                // check user balance
                 try
                 {
                     string url = base_url + "/v1/balance";
@@ -59,7 +62,7 @@ class Program
                     else
                     {
                         Console.WriteLine("\nMessage: " + data.message);
-                        Console.WriteLine("Balance" + data.balance);
+                        Console.WriteLine("Balance: " + data.balance);
                     }
                 }
                 catch (Exception e)
@@ -70,6 +73,7 @@ class Program
             }
             else if(user_input == "2")
             {
+                // change user's password
                 try
                 {
                     string url = base_url + "/v1/changepass";
@@ -86,7 +90,14 @@ class Program
                     });
 
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
-                    Console.WriteLine("\nMessage: " + data.message);
+                    if (data.error != null)
+                    {
+                        Console.WriteLine("Error: " + data.error);
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nMessage: " + data.message);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -96,6 +107,7 @@ class Program
             }
             else if(user_input == "3")
             {
+                // make a transaction
                 try
                 {
                     string url = base_url + "/v1/create_transaction";
@@ -134,6 +146,7 @@ class Program
             }
             else if(user_input == "4")
             {
+                // create account
                 try
                 {
                     string url = base_url + "/v1/signup";
@@ -165,6 +178,7 @@ class Program
             }
             else if(user_input == "5")
             {
+                // delete account
                 try
                 {
                     string url = base_url + "/v1/delete";
@@ -196,26 +210,40 @@ class Program
             }
             else if(user_input == "6")
             {
+                // list all transactions
                 string url = base_url + "/v1/listt";
 
                 List<dynamic> data = await ProcessHttpResponseList(await GetMessageAsync(url));
 
                 foreach (var transaction in data)
                 {
-                    Console.WriteLine(transaction);
+                    Console.WriteLine("Sender: " + transaction.sender);
+                    Console.WriteLine("Receiver: " + transaction.receiver);
+                    Console.WriteLine("Amount: " + transaction.amount);
+                    Console.WriteLine("Note: " + transaction.note);
+
+                    if (debug_enabled)
+                    {
+                        Console.WriteLine("ID: " + transaction.id);
+                        Console.WriteLine("timestamp: " + transaction.date);
+                    }
+
+                    Console.WriteLine("");
                 }
 
                 PromptUser("Press enter to continue..");
             }
             else if(user_input == "7")
             {
+                // list users
                 string url = base_url + "/v1/listu";
 
                 List<dynamic> data = await ProcessHttpResponseList(await GetMessageAsync(url));
 
-                foreach (var transaction in data)
+                foreach (var userdata in data)
                 {
-                    Console.WriteLine(transaction + "\n");
+                    Console.WriteLine("Username: " + userdata.username);
+                    Console.WriteLine("Balance: " + userdata.balance + "\n");
                 }
 
                 PromptUser("Press enter to continue..");
@@ -224,6 +252,7 @@ class Program
             {
                 try
                 {
+                    // verify if user exists
                     string url = base_url + "/v1/exists";
 
                     string username = PromptUser("Enter username: ");
@@ -250,6 +279,7 @@ class Program
             }
             else if(user_input == "9")
             {
+                // verify password
                 try
                 {
                     string url = base_url + "/v1/verify";
