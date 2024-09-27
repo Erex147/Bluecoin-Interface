@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
 class Program
 {
@@ -24,93 +22,142 @@ class Program
                            "7: List Users\n" +
                            "q: Quit\n");
 
-            string user_input = AcceptUserInput("Enter option: ");
+            string user_input = PromptUser("Enter option: ");
 
             if (user_input == "1")
             {
-                string url = base_url + "/v1/balance";
-
-                string username = AcceptUserInput("Enter username: ");
-
-                var jsonContent = JsonContent.Create(new
+                try
                 {
-                    username = username,
-                });
+                    string url = base_url + "/v1/balance";
 
-                await PostMessageAsync(url, jsonContent);
+                    string username = PromptUser("Enter username: ");
+
+                    var jsonContent = JsonContent.Create(new
+                    {
+                        username = username,
+                    });
+
+                    await PostMessageAsync(url, jsonContent);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                PromptUser("Press enter to continue..");
             }
-            else if(user_input == "2"){
-                string url = base_url + "/v1/changepass";
-
-                string username = AcceptUserInput("Enter username: ");
-                string password = AcceptUserInput("Enter password: ");
-                string new_password = AcceptUserInput("Enter new password: ");
-
-                var jsonContent = JsonContent.Create(new
+            else if(user_input == "2")
+            {
+                try
                 {
-                    username = username,
-                    password = password,
-                    new_password = new_password,
-                });
+                    string url = base_url + "/v1/changepass";
 
-                await PostMessageAsync(url, jsonContent);
+                    string username = PromptUser("Enter username: ");
+                    string password = PromptUser("Enter password: ");
+                    string new_password = PromptUser("Enter new password: ");
+
+                    var jsonContent = JsonContent.Create(new
+                    {
+                        username = username,
+                        password = password,
+                        new_password = new_password,
+                    });
+
+                    await PostMessageAsync(url, jsonContent);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                PromptUser("Press enter to continue..");
             }
-            else if(user_input == "3"){
-                string url = base_url + "/v1/create_transaction";
-
-                string sender = AcceptUserInput("Enter sender username: ");
-                string receiver = AcceptUserInput("Enter receiver username: ");
-                int amount = Convert.ToInt32(AcceptUserInput("Enter amount: "));
-                string note = AcceptUserInput("Enter note (optional): ");
-
-                var jsonContent = JsonContent.Create(new
+            else if(user_input == "3")
+            {
+                try
                 {
-                    sender_username = sender,
-                    receiver_username = receiver,
-                    amount = amount,
-                    note = note,
-                });
+                    string url = base_url + "/v1/create_transaction";
 
-                await PostMessageAsync(url, jsonContent);
+                    string sender = PromptUser("Enter sender username: ");
+                    string password = PromptUser("Enter password: ");
+                    string receiver = PromptUser("Enter receiver username: ");
+                    int amount = Convert.ToInt32(PromptUser("Enter amount: "));
+                    string note = PromptUser("Enter note (optional): ");
+
+                    var jsonContent = JsonContent.Create(new
+                    {
+                        sender_username = sender,
+                        password = password,
+                        receiver_username = receiver,
+                        amount = amount,
+                        note = note,
+                    });
+
+                    await PostMessageAsync(url, jsonContent);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("It is also possible that the amount entered was in an invalid format");
+                }
+                PromptUser("Press enter to continue..");
             }
-            else if(user_input == "4"){
-                string url = base_url + "/v1/signup";
-
-                string username = AcceptUserInput("Enter username: ");
-                string password = AcceptUserInput("Enter password: ");
-
-                var jsonContent = JsonContent.Create(new
+            else if(user_input == "4")
+            {
+                try
                 {
-                    username = username,
-                    password = password
-                });
+                    string url = base_url + "/v1/signup";
 
-                await PostMessageAsync(url, jsonContent);
+                    string username = PromptUser("Enter username: ");
+                    string password = PromptUser("Enter password: ");
+
+                    var jsonContent = JsonContent.Create(new
+                    {
+                        username = username,
+                        password = password
+                    });
+
+                    await PostMessageAsync(url, jsonContent);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                PromptUser("Press enter to continue..");
             }
-            else if(user_input == "5"){
-                string url = base_url + "/v1/delete";
-
-                string username = AcceptUserInput("Enter username: ");
-                string password = AcceptUserInput("Enter password: ");
-
-                var jsonContent = JsonContent.Create(new
+            else if(user_input == "5")
+            {
+                try
                 {
-                    username = username,
-                    password = password
-                });
+                    string url = base_url + "/v1/delete";
 
-                await PostMessageAsync(url, jsonContent);
+                    string username = PromptUser("Enter username: ");
+                    string password = PromptUser("Enter password: ");
+
+                    var jsonContent = JsonContent.Create(new
+                    {
+                        username = username,
+                        password = password
+                    });
+
+                    await PostMessageAsync(url, jsonContent);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                PromptUser("Press enter to continue..");
             }
             else if(user_input == "6")
             {
                 string url = base_url + "/v1/listt";
                 await GetMessageAsync(url);
+                PromptUser("Press enter to continue..");
             }
             else if(user_input == "7")
             {
                 string url = base_url + "/v1/listu";
                 await GetMessageAsync(url);
-            }
+                PromptUser("Press enter to continue..");
+            } 
             else if(user_input == "q")
             {
                 Console.WriteLine("Exiting...");
@@ -147,7 +194,7 @@ class Program
         return response;
     }
 
-    static string AcceptUserInput(string prompt)
+    static string PromptUser(string prompt)
     {
         Console.WriteLine(prompt + "");
         string response = Console.ReadLine() + "";
