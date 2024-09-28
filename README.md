@@ -1,5 +1,5 @@
 # Bluecoin Interface
-An CLI to interact with the BlueCoin API.
+A CLI to interact with the BlueCoin API.
 
 # Usage
 * Get the zip file of the release (make sure it is of your computer's appropriate architecture).
