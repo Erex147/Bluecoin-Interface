@@ -444,8 +444,9 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
-# Zip file
+# misc
 *.zip
+*.bash
 
 ##
 ## Visual Studio Code

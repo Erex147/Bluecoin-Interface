@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2024  Erex147
 using System.Net.Http.Json;
+using miner;
 using Newtonsoft.Json;
 
 class Program
@@ -57,7 +58,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -92,7 +93,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -103,7 +104,7 @@ class Program
                 {
                     Console.WriteLine(e.Message);
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "3")
             {
@@ -130,7 +131,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -142,7 +143,7 @@ class Program
                     Console.WriteLine(e.Message);
                     Console.WriteLine("It is also possible that the amount entered was in an invalid format");
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "4")
             {
@@ -163,7 +164,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -174,7 +175,7 @@ class Program
                 {
                     Console.WriteLine(e.Message);
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "5")
             {
@@ -195,7 +196,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -206,7 +207,7 @@ class Program
                 {
                     Console.WriteLine(e.Message);
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "6")
             {
@@ -217,7 +218,7 @@ class Program
 
                 foreach (var transaction in data)
                 {
-                    Console.WriteLine("Sender: " + transaction.sender);
+                    Console.WriteLine("\nSender: " + transaction.sender);
                     Console.WriteLine("Receiver: " + transaction.receiver);
                     Console.WriteLine("Amount: " + transaction.amount);
                     Console.WriteLine("Note: " + transaction.note);
@@ -227,11 +228,9 @@ class Program
                         Console.WriteLine("ID: " + transaction.id);
                         Console.WriteLine("timestamp: " + transaction.date);
                     }
-
-                    Console.WriteLine("");
                 }
 
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "7")
             {
@@ -242,11 +241,11 @@ class Program
 
                 foreach (var userdata in data)
                 {
-                    Console.WriteLine("Username: " + userdata.username);
-                    Console.WriteLine("Balance: " + userdata.balance + "\n");
+                    Console.WriteLine("\nUsername: " + userdata.username);
+                    Console.WriteLine("Balance: " + userdata.balance);
                 }
 
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "8")
             {
@@ -264,7 +263,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -275,7 +274,7 @@ class Program
                 {
                     Console.WriteLine(e.Message);
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "9")
             {
@@ -296,7 +295,7 @@ class Program
                     dynamic data = await ProcessHttpResponse(await PostMessageAsync(url, jsonContent));
                     if (data.error != null)
                     {
-                        Console.WriteLine("Error: " + data.error);
+                        Console.WriteLine("\nError: " + data.error);
                     }
                     else
                     {
@@ -307,7 +306,7 @@ class Program
                 {
                     Console.WriteLine(e.Message);
                 }
-                PromptUser("Press enter to continue..");
+                PromptUser("\nPress enter to continue..");
             }
             else if(user_input == "q")
             {
