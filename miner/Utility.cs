@@ -1,3 +1,4 @@
+// Copyright (C) 2024  Erex147
 using System.Net.Http.Json;
 using Newtonsoft.Json;
 

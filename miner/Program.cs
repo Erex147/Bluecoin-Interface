@@ -1,17 +1,20 @@
 ﻿// Copyright (C) 2024  Erex147
 using System.Net.Http.Json;
+using System.Threading;
+using System.Threading.Tasks;
+
 using miner;
-using Newtonsoft.Json;
 
 class Program
 {
     public static HttpClient client = new HttpClient();
     public static bool debug_enabled = false;
+    static string base_url = "https://gabserver.eu";
+    static string username = "";
+    static string password = "";
 
     static async Task Main(string[] args)
     {
-        string base_url = "https://gabserver.eu";
-
         if (args.Length > 0)
         {
             try
@@ -23,6 +26,7 @@ class Program
                 Console.WriteLine("invalid argument passed");
             }
         }
+        Miner.NonceFound += async(sender, args) => await Miner_NonceFound(sender, args);
 
         Console.WriteLine("bluc-interface  Copyright (C) 2024  Erex147");
         while (true)
@@ -37,6 +41,7 @@ class Program
                            "7: List Users\n" +
                            "8: Verify User\n" +
                            "9: Verify Password\n" +
+                           "10: Toggle miner\n" +
                            "q: Quit\n");
 
             string user_input = Utility.PromptUser("Enter option: ");
@@ -320,6 +325,51 @@ class Program
                 }
                 Utility.PromptUser("\nPress enter to continue..");
             }
+            else if(user_input == "10")
+            {
+                // miner
+                try
+                {
+                    if( Miner.mining == false)
+                    {
+                        string username_ = Utility.PromptUser("Enter username: ");
+                        string password_ = Utility.PromptUser("Enter password: ");
+
+                        string url = base_url + "/v1/verify";
+
+                        var jsonContent = JsonContent.Create(new
+                        {
+                            username = username,
+                            password = password
+                        });
+
+                        dynamic data = await Utility.ProcessHttpResponse(await Utility.PostMessageAsync(url, jsonContent));
+                        if (data.error != null)
+                        {
+                            Console.WriteLine("\nError: " + data.error);
+                        }
+                        else
+                        {
+                            username = username_;
+                            password = password_;
+
+                            Console.WriteLine("\nStarted a mining process");
+                            Thread thread = new Thread(async () => await Mine());
+                            thread.Start();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nEnded a mining process");
+                        Miner.mining = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                Utility.PromptUser("\nPress enter to continue..");
+            }
             else if(user_input == "q")
             {
                 Console.WriteLine("Exiting...");
@@ -330,5 +380,68 @@ class Program
                 Console.WriteLine("Invalid input");
             }
         }
+    }
+
+    static async Task Mine()
+    {
+        string url = base_url + "/v1/userhashget";
+        string hash = "";
+
+        var jsonContent = JsonContent.Create(new
+        {
+            username = username,
+            password = password,
+            threadid = 1,
+        });
+
+        dynamic data = await Utility.ProcessHttpResponse(await Utility.PostMessageAsync(url, jsonContent));
+
+        if (debug_enabled == true)
+        {
+            if (data.error != null)
+            {
+                Console.WriteLine("\nError: " + data.error);
+            }
+            else
+            {
+                Console.WriteLine("\nHash: " + data.hash);
+                hash = data.hash;
+            }
+        }
+
+        Miner.mining = true;
+        Miner.hashValue = hash;
+        Miner.threadid = 1;
+        Miner.Mine();
+    }
+
+    static async Task Miner_NonceFound(object? sender, Miner.NonceFoundArgs args)
+    {
+        string url = base_url + "/v1/userhashset";
+
+        if (debug_enabled == true)
+        {
+            Console.WriteLine($"Found Nonce: {args.Nonce}");
+        }
+        
+        var jsonContent = JsonContent.Create(new
+        {
+            username = username,
+            password = password,
+            nonce = args.Nonce,
+            threadid = 1,
+        });
+
+        dynamic data = await Utility.ProcessHttpResponse(await Utility.PostMessageAsync(url, jsonContent));
+
+        if (debug_enabled == true)
+        {
+            if (data.error != null)
+            {
+                Console.WriteLine("\nError: " + data.error);
+            }
+        }
+
+        await Mine();
     }
 }
