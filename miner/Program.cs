@@ -333,13 +333,13 @@ class Program
                 {
                     if (mineObj == null)
                     {
-                        Console.WriteLine("Started a mine process");
                         string username = Utility.PromptUser("Enter username: ");
                         string password = Utility.PromptUser("Enter password: ");
                         mineObj = new Miner(1, username, password);
 
                         Thread thread = new Thread(async () => await mineObj.StartMining());
                         thread.Start();
+                        Console.WriteLine("Started a mine process");
                     }
                     else
                     {
