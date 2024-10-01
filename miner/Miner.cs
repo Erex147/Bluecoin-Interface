@@ -20,65 +20,6 @@ public class Miner
     static string targetPrefix = "00000";
     static long batchSize = 9007199254740991;
 
-    // public static async Task Mine(string username, string password)
-    // {
-    //     long nonce = 1; // Start at 1 since it's the only valid format
-    //     long batchSize = 9007199254740991; // Process this many hashes at a time for efficiency
-    //     string targetPrefix = "00000";
-
-    //     var jsonContent = JsonContent.Create(new
-    //     {
-    //         username = username,
-    //         password = password,
-    //         threadid = 1
-    //     });
-
-    //     dynamic data = await Utility.ProcessHttpResponse(await Utility.PostMessageAsync(getHashUrl, jsonContent));
-    //     if (data.error != null)
-    //     {
-    //         Console.WriteLine("\nError: " + data.error);
-    //     }
-    //     else
-    //     {
-    //         hashValue = data.hash;
-    //     }
-
-    //     async Task doWork()
-    //     {
-    //         //System.Threading.Thread.Sleep(1000);
-    //         if (!mining) return;
-    //         for (long i = 0; i <= batchSize; i++)
-    //         {
-    //             string input = hashValue + nonce.ToString();
-    //             string hash = ComputeSHA1(input);
-
-    //             if (hash.StartsWith(targetPrefix) && mining == true)
-    //             {
-    //                  var jsonContent = JsonContent.Create(new
-    //                 {
-    //                     username = username,
-    //                     password = password,
-    //                     threadid = 1
-    //                 });
-
-    //                 dynamic data = await Utility.ProcessHttpResponse(await Utility.PostMessageAsync(setHashUrl, jsonContent));
-    //                 if (data.error != null)
-    //                 {
-    //                     Console.WriteLine("\nError: " + data.error);
-    //                 }
-    //                 else
-    //                 {
-    //                     hashValue = data.hash;
-    //                 }
-
-    //                 return;
-    //             }
-
-    //             nonce++;
-    //         }
-    //     }
-    //     await doWork();
-    // }
     public Miner(int id, string user, string pwd)
     {
         this.threadid = id;
