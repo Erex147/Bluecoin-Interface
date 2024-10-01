@@ -335,7 +335,9 @@ class Program
                     {
                         string username = Utility.PromptUser("Enter username: ");
                         string password = Utility.PromptUser("Enter password: ");
-                        mineObj = new Miner(1, username, password);
+                        int threadid = Convert.ToInt16(Utility.PromptUser("Enter thread ID: "));
+                        threadid = Math.Clamp(threadid, 1, 8);
+                        mineObj = new Miner(threadid, username, password);
 
                         Thread thread = new Thread(async () => await mineObj.StartMining());
                         thread.Start();
