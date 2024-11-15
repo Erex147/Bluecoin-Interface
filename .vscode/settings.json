@@ -1,5 +1,3 @@
 {
-    "dotnet.defaultSolution": "miner.sln",
-    "scm.providerCountBadge": "visible",
-    "scm.alwaysShowRepositories": true
+    
 }
